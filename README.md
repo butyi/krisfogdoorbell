@@ -4,6 +4,10 @@
 
 [Team leave gift](https://github.com/butyi/tlg) sound player was ordered by Krisfog for his doorbell for fun.
 
+![board top](https://github.com/butyi/krisfogdoorbell/blob/main/img1.jpg)
+
+![board buttom](https://github.com/butyi/krisfogdoorbell/blob/main/img2.jpg)
+
 ## Hardware
 
 The hardware is [sci2can board](https://github.com/butyi/sci2can) V1.0
