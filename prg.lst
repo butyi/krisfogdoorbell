@@ -1,12 +1,12 @@
-File prg.asm      * By ASM8 v9.93 Linux [Saturday, December 10, 2022  5:47 pm]
+File prg.asm      * By ASM8 v9.93 Linux [Wednesday, December 21, 2022  10:45 pm]
 
     1                                     ; =============================================================================
-    2                                     ; Team Leave Gift gadget (wave player) with 9S08DZ60 board.
+    2                                     ; Doorbell for Krisfog (wave player) with 9S08DZ60 board for battery supply
     3                                     ; =============================================================================
     4                                     
     5                                     ; ===================== INCLUDE FILES ==========================================
     6                                     #include "dz60.inc"
-*** BEGIN INCLUDE FILE: /home/butyi/sync/private/embedded/hc08/dz/krisfogbell/dz60.inc ***
+*** BEGIN INCLUDE FILE: /home/butyi/repos/krisfogdoorbell/dz60.inc ***
     1                                     ;*******************************************************************************
     2                                     ;*            MC9S08DZ60 FRAMEWORK INCLUDE FILE FOR ASM8 ASSEMBLER             *
     3                                     ;*******************************************************************************
@@ -14,7 +14,7 @@ File prg.asm      * By ASM8 v9.93 Linux [Saturday, December 10, 2022  5:47 pm]
     5                                     ;*******************************************************************************
     6                                     
     7                                                         #Uses     macros.inc
-*** BEGIN INCLUDE FILE: /home/butyi/sync/private/embedded/hc08/dz/krisfogbell/macros.inc ***
+*** BEGIN INCLUDE FILE: /home/butyi/repos/krisfogdoorbell/macros.inc ***
     1                                     ;*******************************************************************************
     2                                     ;* Include   : MACROS.INC
     3                                     ;* Programmer: Tony Papadimitriou <tonyp@acm.org>
@@ -2466,7 +2466,7 @@ File prg.asm      * By ASM8 v9.93 Linux [Saturday, December 10, 2022  5:47 pm]
  2436                                                         endm
  2437                                     
  2438                                     ;*******************************************************************************
-*** END   INCLUDE FILE: /home/butyi/sync/private/embedded/hc08/dz/krisfogbell/macros.inc *** (RESUMING FILE: /home/butyi/sync/private/embedded/hc08/dz/krisfogbell/dz60.inc)
+*** END   INCLUDE FILE: /home/butyi/repos/krisfogdoorbell/macros.inc *** (RESUMING FILE: /home/butyi/repos/krisfogdoorbell/dz60.inc)
     7                                                         #Exit
     8                                                         #Message  **********************
     9                                                         #Message  * Target: MC9S08DZ60 *
@@ -5323,7 +5323,7 @@ File prg.asm      * By ASM8 v9.93 Linux [Saturday, December 10, 2022  5:47 pm]
  1001                                     
  1002                                     ;-------------------------------------------------------------------------------
  1003                                                         #Uses     common.inc
-*** BEGIN INCLUDE FILE: /home/butyi/sync/private/embedded/hc08/dz/krisfogbell/common.inc ***
+*** BEGIN INCLUDE FILE: /home/butyi/repos/krisfogdoorbell/common.inc ***
     1                                     ;*******************************************************************************
     2                                     ;*           COMMON EQUATES -- MCU INDEPENDENT -- FOR ASM8 ASSEMBLER           *
     3                                     ;*******************************************************************************
@@ -8509,7 +8509,7 @@ File prg.asm      * By ASM8 v9.93 Linux [Saturday, December 10, 2022  5:47 pm]
  2998                                               #ifdef SIMHCS
  3000                                               #else ifdef DEBUG
  3002                                               #endif
-*** END   INCLUDE FILE: /home/butyi/sync/private/embedded/hc08/dz/krisfogbell/common.inc *** (RESUMING FILE: /home/butyi/sync/private/embedded/hc08/dz/krisfogbell/dz60.inc)
+*** END   INCLUDE FILE: /home/butyi/repos/krisfogdoorbell/common.inc *** (RESUMING FILE: /home/butyi/repos/krisfogdoorbell/dz60.inc)
  1004                                     ;-------------------------------------------------------------------------------
  1005                                     
  1006                                                         #EEPROM
@@ -8563,7 +8563,7 @@ File prg.asm      * By ASM8 v9.93 Linux [Saturday, December 10, 2022  5:47 pm]
  1055                                     
  1056                                     ;*******************************************************************************
  1057                                                         #Uses     newcop.inc
-*** BEGIN INCLUDE FILE: /home/butyi/sync/private/embedded/hc08/dz/krisfogbell/newcop.inc ***
+*** BEGIN INCLUDE FILE: /home/butyi/repos/krisfogdoorbell/newcop.inc ***
     1                                     ;*******************************************************************************
     2                                     ; Purpose: Special COP reset sequence for DZ/FL and compatible derivatives
     3                                     ; Input  : None
@@ -8603,11 +8603,11 @@ File prg.asm      * By ASM8 v9.93 Linux [Saturday, December 10, 2022  5:47 pm]
    37                                                         #Cycles   :temp&$FFFF+?$$$
    38                                               #endif
    39                                                         endm
-*** END   INCLUDE FILE: /home/butyi/sync/private/embedded/hc08/dz/krisfogbell/newcop.inc *** (RESUMING FILE: /home/butyi/sync/private/embedded/hc08/dz/krisfogbell/dz60.inc)
+*** END   INCLUDE FILE: /home/butyi/repos/krisfogdoorbell/newcop.inc *** (RESUMING FILE: /home/butyi/repos/krisfogdoorbell/dz60.inc)
  1058                                     ;*******************************************************************************
-*** END   INCLUDE FILE: /home/butyi/sync/private/embedded/hc08/dz/krisfogbell/dz60.inc *** (RESUMING FILE: /home/butyi/sync/private/embedded/hc08/dz/krisfogbell/prg.asm)
+*** END   INCLUDE FILE: /home/butyi/repos/krisfogdoorbell/dz60.inc *** (RESUMING FILE: /home/butyi/repos/krisfogdoorbell/prg.asm)
     7                                     #include "cop.sub"
-*** BEGIN INCLUDE FILE: /home/butyi/sync/private/embedded/hc08/dz/krisfogbell/cop.sub ***
+*** BEGIN INCLUDE FILE: /home/butyi/repos/krisfogdoorbell/cop.sub ***
     1                                     ; ===================== Sub-Routines ==========================================
     2                                     #ROM
     3                                     
@@ -8623,10 +8623,10 @@ File prg.asm      * By ASM8 v9.93 Linux [Saturday, December 10, 2022  5:47 pm]
    13                                     
    14                                             ; System Options Register 1
    15                                             ; COPT = 01b (2^5 cycles, 1kHz) ~= 32ms
-   16                                             ; STOPE = 0 (Stop mode disabled)
+   16                                             ; STOPE = 1 (Stop mode enabled)
    17                                             ; SCI2PS = 0 (TxD2 on PTF0, RxD2 on PTF1.)
    18                                             ; IICPS = 0 (SCL on PTF2, SDA on PTF3)
-   19    [1900] 1900:A648            [ 2]         lda     #COPT0_|IICPS_
+   19    [1900] 1900:A660            [ 2]         lda     #COPT0_|STOPE_
    20    [1902] 1902:C718 02         [ 4]         sta     SOPT1
    21    [1905] 1905:81              [ 6]         rts
    22                                     
@@ -8641,9 +8641,9 @@ File prg.asm      * By ASM8 v9.93 Linux [Saturday, December 10, 2022  5:47 pm]
    31    [1911] 1911:81              [ 6]         rts
    32                                     
    33                                     
-*** END   INCLUDE FILE: /home/butyi/sync/private/embedded/hc08/dz/krisfogbell/cop.sub *** (RESUMING FILE: /home/butyi/sync/private/embedded/hc08/dz/krisfogbell/prg.asm)
+*** END   INCLUDE FILE: /home/butyi/repos/krisfogdoorbell/cop.sub *** (RESUMING FILE: /home/butyi/repos/krisfogdoorbell/prg.asm)
     8                                     #include "lib.sub"
-*** BEGIN INCLUDE FILE: /home/butyi/sync/private/embedded/hc08/dz/krisfogbell/lib.sub ***
+*** BEGIN INCLUDE FILE: /home/butyi/repos/krisfogdoorbell/lib.sub ***
     1                                     ; ===================== CONFIG =================================================
     2                                     
     3                0008                 STRBUFFLEN      equ     8       ; Length of string manipulation buffer
@@ -8872,9 +8872,9 @@ File prg.asm      * By ASM8 v9.93 Linux [Saturday, December 10, 2022  5:47 pm]
   226                                     
   227                                     
   228                                     
-*** END   INCLUDE FILE: /home/butyi/sync/private/embedded/hc08/dz/krisfogbell/lib.sub *** (RESUMING FILE: /home/butyi/sync/private/embedded/hc08/dz/krisfogbell/prg.asm)
+*** END   INCLUDE FILE: /home/butyi/repos/krisfogdoorbell/lib.sub *** (RESUMING FILE: /home/butyi/repos/krisfogdoorbell/prg.asm)
     9                                     #include "wave.sub"
-*** BEGIN INCLUDE FILE: /home/butyi/sync/private/embedded/hc08/dz/krisfogbell/wave.sub ***
+*** BEGIN INCLUDE FILE: /home/butyi/repos/krisfogdoorbell/wave.sub ***
     1                                     ; ====================  VARIABLES  ============================================
     2                                     
     3                                     #RAM
@@ -8971,7 +8971,7 @@ File prg.asm      * By ASM8 v9.93 Linux [Saturday, December 10, 2022  5:47 pm]
    94                                     ; waveform 8bit sample size, 8kHz sample rate, 1.7s sound, 13600 bytes
    95                1A4A                 wave
    96                                     #include "wave.asm"
-*** BEGIN INCLUDE FILE: /home/butyi/sync/private/embedded/hc08/dz/krisfogbell/wave.asm ***
+*** BEGIN INCLUDE FILE: /home/butyi/repos/krisfogdoorbell/wave.asm ***
     1    [1A4A] 1A4A.7F                           db      $7F,$7D,$7F,$7B,$7D,$7E,$82,$83,$80,$7B,$7E,$75,$84,$84,$89,$7D
     1    [1A4B] 1A4B.7D                   
     1    [1A4C] 1A4C.7F                   
@@ -22681,7 +22681,7 @@ File prg.asm      * By ASM8 v9.93 Linux [Saturday, December 10, 2022  5:47 pm]
   857    [4FD4] 4FD4.80                   
   857    [4FD5] 4FD5.80                   
   857    [4FD6] 4FD6.00                   
-*** END   INCLUDE FILE: /home/butyi/sync/private/embedded/hc08/dz/krisfogbell/wave.asm *** (RESUMING FILE: /home/butyi/sync/private/embedded/hc08/dz/krisfogbell/wave.sub)
+*** END   INCLUDE FILE: /home/butyi/repos/krisfogdoorbell/wave.asm *** (RESUMING FILE: /home/butyi/repos/krisfogdoorbell/wave.sub)
    97                                     
    98                                     
    99                                     ; ===================== IT VECTORS ==========================================
@@ -22689,74 +22689,231 @@ File prg.asm      * By ASM8 v9.93 Linux [Saturday, December 10, 2022  5:47 pm]
   101                FFCC                         org     Vrtc
   102    [FFCC] FFCC.1A1F                         dw      RTC_IT
   103                                     
-*** END   INCLUDE FILE: /home/butyi/sync/private/embedded/hc08/dz/krisfogbell/wave.sub *** (RESUMING FILE: /home/butyi/sync/private/embedded/hc08/dz/krisfogbell/prg.asm)
+*** END   INCLUDE FILE: /home/butyi/repos/krisfogdoorbell/wave.sub *** (RESUMING FILE: /home/butyi/repos/krisfogdoorbell/prg.asm)
    10                                     ; ====================  EQUATES ===============================================
-   11                                     
-   12                                     ; ====================  VARIABLES  ============================================
-   13                                     
-   14                                     #RAM
-   15                                     
-   16           0094+0001                 PTEe      ds        1                   ; Previous state of PTE
-   17                                     
-   18                                     ; ====================  PROGRAM START  ========================================
-   19                                     #ROM
-   20                                     
-   21                4FD7                 start:
-   22    [4FD7] 4FD7:9B              [ 1]         sei                     ; disable interrupts
-   23                                     
-   24    [4FD8] 4FD8:4510 7F         [ 3]         ldhx    #XRAM_END       ; H:X points to SP
-   25    [4FDB] 4FDB:94              [ 2]         txs                     ; init SP
-   26                                     
-   27    [4FDC] 4FDC:CD19 00         [ 6]         jsr     COP_Init      ; Init watchdog
-   28    [4FDF] 4FDF:CD19 F1         [ 6]         jsr     WAV_Init      ; Init wave player PWM channels and enable its interrupt
-   29                                     
-   30    [4FE2] 4FE2:9A              [ 1]         cli
-   31                                     
-   32                                             ; Init debug LED
-   33    [4FE3] 4FE3:6E40 00         [ 4]         mov     #PIN6_,PTA      ; Switch LED On on PTA6
-   34    [4FE6] 4FE6:6E40 01         [ 4]         mov     #PIN6_,DDRA     ; PTA6 output
-   35    [4FE9] 4FE9:4E08 94         [ 5]           mov       PTE,PTEe  ; Save PTE state
-   36    [4FEC] 4FEC:A602            [ 2]           lda       #PIN1_
-   37    [4FEE] 4FEE:C718 68         [ 4]           sta       PTFPE               ; Switch on pull up on button pin
-   38                                     
-   39    [4FF1] 4FF1:6E01 93         [ 4]           mov       #1,startbell        ; Start wave at power on to hear end of power cut :)
-   40                4FF4                 main
-   41    [4FF4] 4FF4:CD19 06         [ 6]         jsr     KickCop         ; Update watchdog
-   42                                     
-   43                                               ; Show active bell on status LED
-   44    [4FF7] 4FF7:B693            [ 3]         lda     startbell
-   45    [4FF9] 4FF9:2704 (4FFF)     [ 3]           beq       m_ledki
-   46    [4FFB] 4FFB:1C00            [ 5]         bset    PIN6.,PTA      ; Switch LED On on PTA6
-   47    [4FFD] 4FFD:2002 (5001)     [ 3]           bra       m_ledend
-   48                4FFF                 m_ledki
-   49    [4FFF] 4FFF:1D00            [ 5]         bclr    PIN6.,PTA      ; Switch LED On on PTA6
-   50                5001                 m_ledend
-   51                                     
-   52                                               ; Check faling edge of port, which is a button push event
-   53    [5001] 5001:B608            [ 3]           lda       PTE
-   54    [5003] 5003:43              [ 1]           coma
-   55    [5004] 5004:B494            [ 3]           and       PTEe
-   56    [5006] 5006:A402            [ 2]           and       #PIN1_
-   57    [5008] 5008:2703 (500D)     [ 3]           beq       m_nopushevent
-   58                                               ; Start play wave
-   59    [500A] 500A:6E03 93         [ 4]           mov       #3,startbell
-   60                500D                 m_nopushevent
-   61    [500D] 500D:4E08 94         [ 5]           mov       PTE,PTEe  ; Save PTE state
+   11  M                                  RXD1_A  @pin    PTA,0           ; Parallel to IRQ, to be input
+   11  M                                            #ifb PTA,0
+   11  M                                            #endif
+   11  M                                            #ifb RXD1_A
+   11  M                                            #else ifnb PTA,0
+   11  M                                                      mreq      1:PORT[,BitNumber]
+   11  M                                                      mdef      2,0
+   11  M                                                      mset      0,RXD1_A
+   11  M                                                      #temp     0
+   11  M             0000                 RXD1_A             set       PTA
+   11  M             0000                 RXD1_A.            equ       0
+   11  M             0001                 RXD1_A_            equ       1<RXD1_A.
+   11  M                                            #endif
+   11  M                                            #if :temp > 7
+   11  M                                            #endif
+   11                                                         endm
+   12  M                                  RXD1_E  @pin    PTE,1           ; Parallel to IRQ, to be input
+   12  M                                            #ifb PTE,1
+   12  M                                            #endif
+   12  M                                            #ifb RXD1_E
+   12  M                                            #else ifnb PTE,1
+   12  M                                                      mreq      1:PORT[,BitNumber]
+   12  M                                                      mdef      2,0
+   12  M                                                      mset      0,RXD1_E
+   12  M                                                      #temp     1
+   12  M             0008                 RXD1_E             set       PTE
+   12  M             0001                 RXD1_E.            equ       1
+   12  M             0002                 RXD1_E_            equ       1<RXD1_E.
+   12  M                                            #endif
+   12  M                                            #if :temp > 7
+   12  M                                            #endif
+   12                                                         endm
+   13  M                                  LED2    @pin    PTA,6           ; Status LED
+   13  M                                            #ifb PTA,6
+   13  M                                            #endif
+   13  M                                            #ifb LED2
+   13  M                                            #else ifnb PTA,6
+   13  M                                                      mreq      1:PORT[,BitNumber]
+   13  M                                                      mdef      2,0
+   13  M                                                      mset      0,LED2
+   13  M                                                      #temp     6
+   13  M             0000                 LED2             set       PTA
+   13  M             0006                 LED2.            equ       6
+   13  M             0040                 LED2_            equ       1<LED2.
+   13  M                                            #endif
+   13  M                                            #if :temp > 7
+   13  M                                            #endif
+   13                                                         endm
+   14  M                                  IRQ     @pin    PTA,7           ; IRQ pin to wake up from sleep
+   14  M                                            #ifb PTA,7
+   14  M                                            #endif
+   14  M                                            #ifb IRQ
+   14  M                                            #else ifnb PTA,7
+   14  M                                                      mreq      1:PORT[,BitNumber]
+   14  M                                                      mdef      2,0
+   14  M                                                      mset      0,IRQ
+   14  M                                                      #temp     7
+   14  M             0000                 IRQ             set       PTA
+   14  M             0007                 IRQ.            equ       7
+   14  M             0080                 IRQ_            equ       1<IRQ.
+   14  M                                            #endif
+   14  M                                            #if :temp > 7
+   14  M                                            #endif
+   14                                                         endm
+   15  M                                  UZ_MEAS @pin    PTA,5           ; Do not need to be handled, because R2 and R3 not populated
+   15  M                                            #ifb PTA,5
+   15  M                                            #endif
+   15  M                                            #ifb UZ_MEAS
+   15  M                                            #else ifnb PTA,5
+   15  M                                                      mreq      1:PORT[,BitNumber]
+   15  M                                                      mdef      2,0
+   15  M                                                      mset      0,UZ_MEAS
+   15  M                                                      #temp     5
+   15  M             0000                 UZ_MEAS             set       PTA
+   15  M             0005                 UZ_MEAS.            equ       5
+   15  M             0020                 UZ_MEAS_            equ       1<UZ_MEAS.
+   15  M                                            #endif
+   15  M                                            #if :temp > 7
+   15  M                                            #endif
+   15                                                         endm
+   16  M                                  TXCAN   @pin    PTE,6           ; Do not need to be handled, because CAN tranceiver not populated
+   16  M                                            #ifb PTE,6
+   16  M                                            #endif
+   16  M                                            #ifb TXCAN
+   16  M                                            #else ifnb PTE,6
+   16  M                                                      mreq      1:PORT[,BitNumber]
+   16  M                                                      mdef      2,0
+   16  M                                                      mset      0,TXCAN
+   16  M                                                      #temp     6
+   16  M             0008                 TXCAN             set       PTE
+   16  M             0006                 TXCAN.            equ       6
+   16  M             0040                 TXCAN_            equ       1<TXCAN.
+   16  M                                            #endif
+   16  M                                            #if :temp > 7
+   16  M                                            #endif
+   16                                                         endm
+   17  M                                  RXCAN   @pin    PTE,7           ; Do not need to be handled, because CAN tranceiver not populated
+   17  M                                            #ifb PTE,7
+   17  M                                            #endif
+   17  M                                            #ifb RXCAN
+   17  M                                            #else ifnb PTE,7
+   17  M                                                      mreq      1:PORT[,BitNumber]
+   17  M                                                      mdef      2,0
+   17  M                                                      mset      0,RXCAN
+   17  M                                                      #temp     7
+   17  M             0008                 RXCAN             set       PTE
+   17  M             0007                 RXCAN.            equ       7
+   17  M             0080                 RXCAN_            equ       1<RXCAN.
+   17  M                                            #endif
+   17  M                                            #if :temp > 7
+   17  M                                            #endif
+   17                                                         endm
+   18                                     
+   19                                     ; ====================  VARIABLES  ============================================
+   20                                     #RAM
+   21                                     
+   22                                     ; ====================  PROGRAM START  ========================================
+   23                                     #ROM
+   24                                     
+   25                4FD7                 start:
+   26    [4FD7] 4FD7:9B              [ 1]         sei                     ; Disable interrupts
+   27                                     
+   28    [4FD8] 4FD8:4510 7F         [ 3]         ldhx    #XRAM_END       ; H:X points to SP
+   29    [4FDB] 4FDB:94              [ 2]         txs                     ; Init SP
+   30                                     
+   31    [4FDC] 4FDC:C618 09         [ 4]         lda     SPMSC1
+   32    [4FDF] 4FDF:A4F7            [ 2]         and     #$F7            ; Clear LVDSE -> Disable low voltage detection in Stop Mode
+   33    [4FE1] 4FE1:C718 09         [ 4]         sta     SPMSC1
+   34                                     
+   35    [4FE4] 4FE4:CD19 00         [ 6]         jsr     COP_Init      ; Init watchdog
+   36    [4FE7] 4FE7:AD1B (5004)     [ 5]         bsr     PTX_Init        ; Init port bits to output to decrease current in stop mode
+   37    [4FE9] 4FE9:CD19 F1         [ 6]         jsr     WAV_Init      ; Init wave player PWM channels and enable its interrupt
+   38    [4FEC] 4FEC:AD3B (5029)     [ 5]         bsr     IRQ_Init        ; Init IRQ pin for wakeup
+   39                                     
+   40    [4FEE] 4FEE:9A              [ 1]         cli                     ; enable interrupts
+   41                                     
+   42    [4FEF] 4FEF:1C00            [ 5]         bset    LED2.,LED2      ; LED On
+   43                                     
+   44    [4FF1] 4FF1:6E03 93         [ 4]           mov       #3,startbell        ; Play wave 3 times
+   45                                     
+   46                4FF4                 waitbell                        ; Wait for end of wave
+   47    [4FF4] 4FF4:CD19 06         [ 6]         jsr     KickCop         ; Update watchdog
+   48    [4FF7] 4FF7:B693            [ 3]         lda     startbell       ; Check if wave is still playing
+   49    [4FF9] 4FF9:26F9 (4FF4)     [ 3]         bne     waitbell        ; Wait
+   50                                     
+   51    [4FFB] 4FFB:1D00            [ 5]         bclr    LED2.,LED2      ; LED Off
+   52                                     
+   53                                             ; Deinit RTC to not wake up from stop mode
+   54    [4FFD] 4FFD:3F6C            [ 5]         clr     RTCSC           ; Disable RTC
+   55    [4FFF] 4FFF:1E6C            [ 5]         bset    RTIF.,RTCSC     ; Clear the maybe pending RTC IT
+   56                                     
+   57                                             ; Sleep down (activate Stop Mode)
+   58    [5001] 5001:8E              [ 2]         stop
+   59                                     
+   60    [5002] 5002:20D3 (4FD7)     [ 3]         bra     start           ; Re-init everything, start from skratch
+   61                                     
    62                                     
-   63    [5010] 5010:20E2 (4FF4)     [ 3]           bra       main            ; jump back to main loop
+   63                                     ; ===================== ROUTINES ================================================
    64                                     
-   65                                     ; ===================== ROUTINES ================================================
-   66                                     
-   67                                     ; ===================== STRINGS ================================================
-   68                                     
-   69                                     ; ===================== IT VECTORS ==========================================
-   70                                     #VECTORS
-   71                FFFE                         org     Vreset
-   72    [FFFE] FFFE.4FD7                         dw      start           ; Program Start
-   73                                     
-   74                                     
-   75                                     
-   76                                     
+   65                                     ; ------------------------------------------------------------------------------
+   66                                     ; Parallel Input/Output Control
+   67                                     ; To prevent extra current consumption caused by flying not connected input
+   68                                     ; ports, all ports shall be configured as output. I have configured ports to
+   69                                     ; low level output by default.
+   70                                     ; There are only a few exceptions for the used ports, where different
+   71                                     ; initialization is needed.
+   72                5004                 PTX_Init
+   73                                             ; All ports to be low level
+   74    [5004] 5004:3F00            [ 5]         clr     PTA
+   75    [5006] 5006:3F02            [ 5]         clr     PTB
+   76    [5008] 5008:3F04            [ 5]         clr     PTC
+   77    [500A] 500A:3F06            [ 5]         clr     PTD
+   78    [500C] 500C:3F08            [ 5]         clr     PTE
+   79    [500E] 500E:3F0A            [ 5]         clr     PTF
+   80    [5010] 5010:3F0C            [ 5]         clr     PTG
+   81                                     
+   82                                             ; All ports to be output
+   83    [5012] 5012:A6FF            [ 2]         lda     #$FF
+   84    [5014] 5014:B701            [ 3]         sta     DDRA
+   85    [5016] 5016:1F01            [ 5]         bclr    IRQ.,DDRA       ; IRQ to be Input, otherwise IRQ wake up will not work
+   86    [5018] 5018:1101            [ 5]         bclr    RXD1_A.,DDRA    ; Parallel to IRQ pin, to be input
+   87    [501A] 501A:B703            [ 3]         sta     DDRB
+   88    [501C] 501C:B705            [ 3]         sta     DDRC
+   89    [501E] 501E:B707            [ 3]         sta     DDRD
+   90    [5020] 5020:B709            [ 3]         sta     DDRE
+   91    [5022] 5022:1309            [ 5]         bclr    RXD1_E.,DDRE    ; Parallel to IRQ pin, to be input
+   92    [5024] 5024:B70B            [ 3]         sta     DDRF
+   93    [5026] 5026:B70D            [ 3]         sta     DDRG
+   94                                     
+   95    [5028] 5028:81              [ 6]         rts
+   96                                     
+   97                                     ; ------------------------------------------------------------------------------
+   98                                     ; Init IRQ pin to wake up from Stop Mode
+   99                5029                 IRQ_Init
+  100                                             ; IRQPDD 0x40: 1 IRQ pull device disabled (external pull-up)
+  101                                             ; IRQEDG 0x20: 0 IRQ is falling edge or falling edge/low-level sensitive
+  102                                             ; IRQPE  0x10: 1 IRQ pin function is enabled
+  103                                             ; IRQACK 0x04: 1 to clear IRQF
+  104                                             ; IRQIE  0x02: 1 Interrupt requested whenever IRQF = 1
+  105                                             ; IRQMOD 0x01: 0 IRQ event on edge only
+  106    [5029] 5029:6E56 1C         [ 4]         mov     #$56,IRQSC      ; Enable IRQ pin interrupt
+  107    [502C] 502C:81              [ 6]         rts
+  108                                     
+  109                                     ; ------------------------------------------------------------------------------
+  110                                     ; IRQ pin interrupt routine, hits when IRQ pin is triggered
+  111                502D                 IRQ_IT
+  112    [502D] 502D:141C            [ 5]         bset    IRQACK.,IRQSC   ; clear flag
+  113                                             ; Do nothing, this is only a wake up interrupt
+  114    [502F] 502F:80              [ 9]         rti
+  115                                     
+  116                                     ; ===================== STRINGS ================================================
+  117                                     
+  118                                     ; ===================== IT VECTORS ==========================================
+  119                                     #VECTORS
+  120                FFFA                         org     Virq
+  121    [FFFA] FFFA.502D                         dw      IRQ_IT
+  122                                     
+  123                FFFE                         org     Vreset
+  124    [FFFE] FFFE.4FD7                         dw      start           ; Program Start
+  125                                     
+  126                                     
+  127                                     
+  128                                     
 
 (Legend: [S19 address] O=Offset active, M=Macro active)
 -----------------------------------------------------------
@@ -22765,31 +22922,31 @@ File prg.asm      * By ASM8 v9.93 Linux [Saturday, December 10, 2022  5:47 pm]
 
 Segment  Start   End    Size  CodObj  DatObj  TotObj  Lines
 -------  -----  -----  -----  ------  ------  ------  -----
-RAM      $0080  $0094  $0015   $0000   $0000   $0000     24
+RAM      $0080  $0093  $0014   $0000   $0000   $0000     22
 XRAM     $0100  $0107  $0008   $0000   $0000   $0000      8
-ROM      $1900  $5011  $3712   $0185   $358D   $3712   7758
+ROM      $1900  $502F  $3730   $01A3   $358D   $3730   7803
 DATA     $FFBD  $FFBF  $0003   $0000   $0002   $0002     25
-VECTORS  $FFCC  $FFFF  $0034   $0000   $0004   $0004     17
+VECTORS  $FFCC  $FFFF  $0034   $0000   $0006   $0006     26
 
-Summary  $1900  $FFFF  $E700   $0185   $3593   $3718   7832
+Summary  $1900  $FFFF  $E700   $01A3   $3595   $3738   7884
 
 -----------------------------------------------------------
 
          O V E R A L L   M E M O R Y   U S A G E
 
-Total RAM   size:     29   $001D    0.03 KB
-Total CODE  size:    389   $0185    0.38 KB   (198 instructions)
-Total DATA  size:  13715   $3593   13.39 KB
-Total IMAGE size:  14104   $3718   13.77 KB
+Total RAM   size:     28   $001C    0.03 KB
+Total CODE  size:    419   $01A3    0.41 KB   (216 instructions)
+Total DATA  size:  13717   $3595   13.40 KB
+Total IMAGE size:  14136   $3738   13.80 KB
 
 Lowest address  :   6400   $1900
 Highest address :  65535   $FFFF
-Address Range   :  60138   $EAEA   58.73 KB   (Used Range: 23.45%)
+Address Range   :  60138   $EAEA   58.73 KB   (Used Range: 23.51%)
 
 Number of INCLUDE files: 8
-Number of MACROs called: 315
+Number of MACROs called: 322
 Number of [#]PROCs used: 0
 
-Assembled 7835 lines (No Errors, Warnings: 0), CRC: $6FFD
+Assembled 7887 lines (No Errors, Warnings: 0), CRC: $66CB
 
                          *** End of prg.asm listing ***

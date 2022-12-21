@@ -13,10 +13,10 @@ COP_Init
         
         ; System Options Register 1
         ; COPT = 01b (2^5 cycles, 1kHz) ~= 32ms
-        ; STOPE = 0 (Stop mode disabled)
+        ; STOPE = 1 (Stop mode enabled)
         ; SCI2PS = 0 (TxD2 on PTF0, RxD2 on PTF1.)
         ; IICPS = 0 (SCL on PTF2, SDA on PTF3)
-        lda     #COPT0_|IICPS_
+        lda     #COPT0_|STOPE_
         sta     SOPT1
         rts
         
