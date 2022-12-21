@@ -10,19 +10,24 @@
 
 ## Hardware
 
-The hardware is [sci2can board](https://github.com/butyi/sci2can) V1.0
-Dispay is not needed in this project.
+The hardware is [sci2can board V1.0](https://github.com/butyi/sci2can/blob/1777978958673a1c9e5d99a9fa1fe0c1f72ebfce/hw/sci2can_sch.pdf)
 
 ### Supply
 
-DC supply is not used. 5V to be conntected to power connector of board. Simple old (low current) USB charger is sufficient. 
+DC-DC step-down supply is not populated. 
+3V ... 5V to be conntected to power connector of board.
+Since uC goes to low power mode after a wave play, battery supply is the best choice.
+Best battery is some 3.6V type. Like 18650 or a not used mobile phone battery.
+In sleep, circuit needs 5 uA only. This is very low current.
+With a 2500mAh 18650 battery, standby lifetime is 2.5Ah / 0.000005 A = half million hours = 20833 days = 57 years.
+If you do not like battery, a simple USB charger is also sufficient.
 
 ### Button
 
 `In` is button input. `Out` is shorted to ground on the PCB.
-Button input is on PTE1 pin. Pin is pulled up by software.
-Button connected between `In` and `Out` shorts PTE1 pin to ground.
-This means falling edge of PTE1 pin is button push event.
+Button input is on PTA7 IRQ pin. Pin is pulled up by external 10kOhm resistor.
+Button connected between `In` and `Out` shorts IRQ pin to ground.
+This means falling edge of IRQ pin is wake up button push event.
 
 ### Speaker
 
@@ -34,8 +39,8 @@ Software is simple pure assembly code.
 
 ### Function
 
-Button push event pulls up wave counter to 3. Wave playing is started.
-After wave is layed 3 times, play stops, software waits for next push event.
+Button push event wakes up the uC, pulls up wave counter to 3, starts to play the wave.
+After wave is layed 3 times, play goes to low power mode (Stop3 mode) and waits for next push event (IRQ wake up interrupt).
 Status LED shows the active wave playing.
 
 ### Compile
