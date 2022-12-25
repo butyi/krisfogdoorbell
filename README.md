@@ -28,10 +28,10 @@ With a 2500mAh 18650 battery, standby lifetime is 2.5Ah / 0.000005 A = half mill
 #### Play lifetime
 
 Transistors in bridge drops 0.6V both on high and low sides.
-When 3.6V battery is used, max voltage on speaker is 3.6 - 0.6 - 0.6 = 2.4V
-Speaker resistance is 4 Ohm. Peak current, I = U / R = 2.4V / 4 Ohm = 0.6A
+When 3.6V battery is used, max voltage on speaker is 3.6 - 0.6 - 0.6 = 2.4V.
+Speaker resistance is 4 Ohm. Peak current, I = U / R = 2.4V / 4 Ohm = 0.6A.
 RMS voltage of sinus is 0.7 times of peak voltage.
-0.7 * 0.6A = 0.42A. Since length of sound is shorter than 1 sec, let calculate with 0.4A
+0.7 * 0.6A = 0.42A. Since length of sound is shorter than 1 sec, let calculate with 0.4A.
 Using a 2500mAh 18650 battery, it can keep 2.5A for an hour.
 Time duration of contunuous play is 2.5Ah / 0.4A = 6.25 hours = 22500 secs.
 Since one second wave is played 3 times when button is pushed, one push is 3 secs long playing.
