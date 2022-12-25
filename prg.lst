@@ -1,4 +1,4 @@
-File prg.asm      * By ASM8 v9.93 Linux [Sunday, December 25, 2022  9:56 pm]
+File prg.asm      * By ASM8 v9.93 Linux [Sunday, December 25, 2022  10:06 pm]
 
     1                                     ; =============================================================================
     2                                     ; Doorbell for Krisfog (wave player) with 9S08DZ60 board for battery supply
@@ -22902,29 +22902,27 @@ File prg.asm      * By ASM8 v9.93 Linux [Sunday, December 25, 2022  9:56 pm]
   114                                     
   115    [5040] 5040:81              [ 6]         rts
   116                                     
-  117                                     
-  118                                     
-  119                                     ; ------------------------------------------------------------------------------
-  120                                     ; Port IRQ pin interrupt routine
-  121                5041                 PIRQ_IT
-  122    [5041] 5041:A606            [ 2]         lda     #PTAACK_|PTAIE_ ; Write to PTxACK in PTxSC to clear interrupt
-  123    [5043] 5043:C718 44         [ 4]         sta     PTASC           ; Interrupt Status and Control Register
-  124                                             ; Do nothing, this is only a wake up interrupt
-  125    [5046] 5046:80              [ 9]         rti
+  117                                     ; ------------------------------------------------------------------------------
+  118                                     ; Port IRQ pin interrupt routine
+  119                5041                 PIRQ_IT
+  120    [5041] 5041:A606            [ 2]         lda     #PTAACK_|PTAIE_ ; Write to PTxACK in PTxSC to clear interrupt
+  121    [5043] 5043:C718 44         [ 4]         sta     PTASC           ; Interrupt Status and Control Register
+  122                                             ; Do nothing, this is only a wake up interrupt
+  123    [5046] 5046:80              [ 9]         rti
+  124                                     
+  125                                     ; ===================== STRINGS ================================================
   126                                     
-  127                                     ; ===================== STRINGS ================================================
-  128                                     
-  129                                     ; ===================== IT VECTORS ==========================================
-  130                                     #VECTORS
-  131                FFD2                         org     Vport
-  132    [FFD2] FFD2.5041                         dw      PIRQ_IT
-  133                                     
-  134                FFFE                         org     Vreset
-  135    [FFFE] FFFE.4FD7                         dw      start           ; Program Start
+  127                                     ; ===================== IT VECTORS ==========================================
+  128                                     #VECTORS
+  129                FFD2                         org     Vport
+  130    [FFD2] FFD2.5041                         dw      PIRQ_IT
+  131                                     
+  132                FFFE                         org     Vreset
+  133    [FFFE] FFFE.4FD7                         dw      start           ; Program Start
+  134                                     
+  135                                     
   136                                     
   137                                     
-  138                                     
-  139                                     
 
 (Legend: [S19 address] O=Offset active, M=Macro active)
 -----------------------------------------------------------
@@ -22935,11 +22933,11 @@ Segment  Start   End    Size  CodObj  DatObj  TotObj  Lines
 -------  -----  -----  -----  ------  ------  ------  -----
 RAM      $0080  $0093  $0014   $0000   $0000   $0000     22
 XRAM     $0100  $0107  $0008   $0000   $0000   $0000      8
-ROM      $1900  $5046  $3747   $01BA   $358D   $3747   7814
+ROM      $1900  $5046  $3747   $01BA   $358D   $3747   7812
 DATA     $FFBD  $FFBF  $0003   $0000   $0002   $0002     25
 VECTORS  $FFCC  $FFFF  $0034   $0000   $0006   $0006     26
 
-Summary  $1900  $FFFF  $E700   $01BA   $3595   $374F   7895
+Summary  $1900  $FFFF  $E700   $01BA   $3595   $374F   7893
 
 -----------------------------------------------------------
 
@@ -22958,6 +22956,6 @@ Number of INCLUDE files: 8
 Number of MACROs called: 322
 Number of [#]PROCs used: 0
 
-Assembled 7898 lines (No Errors, Warnings: 0), CRC: $DCA5
+Assembled 7896 lines (No Errors, Warnings: 0), CRC: $DCA5
 
                          *** End of prg.asm listing ***

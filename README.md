@@ -18,16 +18,36 @@ DC-DC step-down supply is not populated.
 3V ... 5V to be conntected to power connector of board.
 Since uC goes to low power mode after a wave play, battery supply is the best choice.
 Best battery is some 3.6V type. Like 18650 or a not used mobile phone battery.
-In sleep, circuit needs 5 uA only. This is very low current.
-With a 2500mAh 18650 battery, standby lifetime is 2.5Ah / 0.000005 A = half million hours = 20833 days = 57 years.
 If you do not like battery, a simple USB charger is also sufficient.
+
+#### Sleep lifetime
+
+In sleep state circuit needs 5 uA only. This is very low current.
+With a 2500mAh 18650 battery, standby lifetime is 2.5Ah / 0.000005 A = half million hours = 20833 days = 57 years.
+
+#### Play lifetime
+
+Transistors in bridge drops 0.6V both on high and low sides.
+When 3.6V battery is used, max voltage on speaker is 3.6 - 0.6 - 0.6 = 2.4V
+Speaker resistance is 4 Ohm. Peak current, I = U / R = 2.4V / 4 Ohm = 0.6A
+RMS voltage of sinus is 0.7 times of peak voltage.
+0.7 * 0.6A = 0.42A. Since length of sound is shorter than 1 sec, let calculate with 0.4A
+Using a 2500mAh 18650 battery, it can keep 2.5A for an hour.
+Time duration of contunuous play is 2.5Ah / 0.4A = 6.25 hours = 22500 secs.
+Since one second wave is played 3 times when button is pushed, one push is 3 secs long playing.
+Max number of push event with a charge of 2500mAh 18650 battery is 22500 / 3 = 7500 pushes.
+
+#### Sound power
+
+Sound power is U * U / R = 2.4V * 2.4V / 4Ohm = 1.44 Watt.
 
 ### Button
 
 `In` is button input. `Out` is shorted to ground on the PCB.
-Button input is on PTA7 IRQ pin. Pin is pulled up by external 10kOhm resistor.
-Button connected between `In` and `Out` shorts IRQ pin to ground.
-This means falling edge of IRQ pin is wake up button push event.
+Button input is on PTA0/PTE1 pin (line RxD1 on circuit diagram). 
+Pin is pulled up by external 10kOhm resistor.
+Button connected between `In` and `Out` shorts PTA0/PTE1 pin to ground.
+Button push causes falling edge of PTA0 pin which wakes up the controller.
 
 ### Speaker
 
