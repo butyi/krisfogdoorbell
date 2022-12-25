@@ -60,7 +60,7 @@ Software is simple pure assembly code.
 ### Function
 
 Button push event wakes up the uC, pulls up wave counter to 3, starts to play the wave.
-After wave is layed 3 times, play goes to low power mode (Stop3 mode) and waits for next push event (IRQ wake up interrupt).
+After wave is layed 3 times, play goes to low power mode (Stop3 mode) and waits for next push event (wake up by port interrupt).
 Status LED shows the active wave playing.
 
 ### Compile
