@@ -1,4 +1,4 @@
-File prg.asm      * By ASM8 v9.93 Linux [Wednesday, December 21, 2022  10:45 pm]
+File prg.asm      * By ASM8 v9.93 Linux [Sunday, December 25, 2022  9:56 pm]
 
     1                                     ; =============================================================================
     2                                     ; Doorbell for Krisfog (wave player) with 9S08DZ60 board for battery supply
@@ -22820,10 +22820,10 @@ File prg.asm      * By ASM8 v9.93 Linux [Wednesday, December 21, 2022  10:45 pm]
    32    [4FDF] 4FDF:A4F7            [ 2]         and     #$F7            ; Clear LVDSE -> Disable low voltage detection in Stop Mode
    33    [4FE1] 4FE1:C718 09         [ 4]         sta     SPMSC1
    34                                     
-   35    [4FE4] 4FE4:CD19 00         [ 6]         jsr     COP_Init      ; Init watchdog
+   35    [4FE4] 4FE4:CD19 00         [ 6]         jsr     COP_Init        ; Init watchdog
    36    [4FE7] 4FE7:AD1B (5004)     [ 5]         bsr     PTX_Init        ; Init port bits to output to decrease current in stop mode
-   37    [4FE9] 4FE9:CD19 F1         [ 6]         jsr     WAV_Init      ; Init wave player PWM channels and enable its interrupt
-   38    [4FEC] 4FEC:AD3B (5029)     [ 5]         bsr     IRQ_Init        ; Init IRQ pin for wakeup
+   37    [4FE9] 4FE9:CD19 F1         [ 6]         jsr     WAV_Init        ; Init wave player PWM channels and enable its interrupt
+   38    [4FEC] 4FEC:AD3B (5029)     [ 5]         bsr     PIRQ_init       ; Init Port IRQ pin for wakeup
    39                                     
    40    [4FEE] 4FEE:9A              [ 1]         cli                     ; enable interrupts
    41                                     
@@ -22883,37 +22883,48 @@ File prg.asm      * By ASM8 v9.93 Linux [Wednesday, December 21, 2022  10:45 pm]
    95    [5028] 5028:81              [ 6]         rts
    96                                     
    97                                     ; ------------------------------------------------------------------------------
-   98                                     ; Init IRQ pin to wake up from Stop Mode
-   99                5029                 IRQ_Init
-  100                                             ; IRQPDD 0x40: 1 IRQ pull device disabled (external pull-up)
-  101                                             ; IRQEDG 0x20: 0 IRQ is falling edge or falling edge/low-level sensitive
-  102                                             ; IRQPE  0x10: 1 IRQ pin function is enabled
-  103                                             ; IRQACK 0x04: 1 to clear IRQF
-  104                                             ; IRQIE  0x02: 1 Interrupt requested whenever IRQF = 1
-  105                                             ; IRQMOD 0x01: 0 IRQ event on edge only
-  106    [5029] 5029:6E56 1C         [ 4]         mov     #$56,IRQSC      ; Enable IRQ pin interrupt
-  107    [502C] 502C:81              [ 6]         rts
+   98                                     ; Init Port Interrupt pin PTA0 to wake up from Stop Mode
+   99                5029                 PIRQ_init
+  100    [5029] 5029:4F              [ 1]         clra                    ; Interrupt disable
+  101    [502A] 502A:C718 44         [ 4]         sta     PTASC           ; Interrupt Status and Control Register
+  102                                     
+  103    [502D] 502D:4F              [ 1]         clra                    ; A pull-up device is connected to the associated pin and detects falling edge/low level for interrupt generation
+  104    [502E] 502E:C718 46         [ 4]         sta     PTAES           ; Interrupt Edge Select Register
+  105                                     
+  106    [5031] 5031:A601            [ 2]         lda     #RXD1_A_        ; Pin enabled as interrupt
+  107    [5033] 5033:C718 45         [ 4]         sta     PTAPS           ; Interrupt Pin Select Register
   108                                     
-  109                                     ; ------------------------------------------------------------------------------
-  110                                     ; IRQ pin interrupt routine, hits when IRQ pin is triggered
-  111                502D                 IRQ_IT
-  112    [502D] 502D:141C            [ 5]         bset    IRQACK.,IRQSC   ; clear flag
-  113                                             ; Do nothing, this is only a wake up interrupt
-  114    [502F] 502F:80              [ 9]         rti
-  115                                     
-  116                                     ; ===================== STRINGS ================================================
+  109    [5036] 5036:A604            [ 2]         lda     #PTAACK_        ; Write to PTxACK in PTxSC to clear any false interrupts
+  110    [5038] 5038:C718 44         [ 4]         sta     PTASC           ; Interrupt Status and Control Register
+  111                                     
+  112    [503B] 503B:A602            [ 2]         lda     #PTAIE_         ; Edge only, Interrupt enable
+  113    [503D] 503D:C718 44         [ 4]         sta     PTASC           ; Interrupt Status and Control Register
+  114                                     
+  115    [5040] 5040:81              [ 6]         rts
+  116                                     
   117                                     
-  118                                     ; ===================== IT VECTORS ==========================================
-  119                                     #VECTORS
-  120                FFFA                         org     Virq
-  121    [FFFA] FFFA.502D                         dw      IRQ_IT
-  122                                     
-  123                FFFE                         org     Vreset
-  124    [FFFE] FFFE.4FD7                         dw      start           ; Program Start
-  125                                     
+  118                                     
+  119                                     ; ------------------------------------------------------------------------------
+  120                                     ; Port IRQ pin interrupt routine
+  121                5041                 PIRQ_IT
+  122    [5041] 5041:A606            [ 2]         lda     #PTAACK_|PTAIE_ ; Write to PTxACK in PTxSC to clear interrupt
+  123    [5043] 5043:C718 44         [ 4]         sta     PTASC           ; Interrupt Status and Control Register
+  124                                             ; Do nothing, this is only a wake up interrupt
+  125    [5046] 5046:80              [ 9]         rti
   126                                     
-  127                                     
+  127                                     ; ===================== STRINGS ================================================
   128                                     
+  129                                     ; ===================== IT VECTORS ==========================================
+  130                                     #VECTORS
+  131                FFD2                         org     Vport
+  132    [FFD2] FFD2.5041                         dw      PIRQ_IT
+  133                                     
+  134                FFFE                         org     Vreset
+  135    [FFFE] FFFE.4FD7                         dw      start           ; Program Start
+  136                                     
+  137                                     
+  138                                     
+  139                                     
 
 (Legend: [S19 address] O=Offset active, M=Macro active)
 -----------------------------------------------------------
@@ -22924,29 +22935,29 @@ Segment  Start   End    Size  CodObj  DatObj  TotObj  Lines
 -------  -----  -----  -----  ------  ------  ------  -----
 RAM      $0080  $0093  $0014   $0000   $0000   $0000     22
 XRAM     $0100  $0107  $0008   $0000   $0000   $0000      8
-ROM      $1900  $502F  $3730   $01A3   $358D   $3730   7803
+ROM      $1900  $5046  $3747   $01BA   $358D   $3747   7814
 DATA     $FFBD  $FFBF  $0003   $0000   $0002   $0002     25
 VECTORS  $FFCC  $FFFF  $0034   $0000   $0006   $0006     26
 
-Summary  $1900  $FFFF  $E700   $01A3   $3595   $3738   7884
+Summary  $1900  $FFFF  $E700   $01BA   $3595   $374F   7895
 
 -----------------------------------------------------------
 
          O V E R A L L   M E M O R Y   U S A G E
 
 Total RAM   size:     28   $001C    0.03 KB
-Total CODE  size:    419   $01A3    0.41 KB   (216 instructions)
+Total CODE  size:    442   $01BA    0.43 KB   (226 instructions)
 Total DATA  size:  13717   $3595   13.40 KB
-Total IMAGE size:  14136   $3738   13.80 KB
+Total IMAGE size:  14159   $374F   13.83 KB
 
 Lowest address  :   6400   $1900
 Highest address :  65535   $FFFF
-Address Range   :  60138   $EAEA   58.73 KB   (Used Range: 23.51%)
+Address Range   :  60138   $EAEA   58.73 KB   (Used Range: 23.54%)
 
 Number of INCLUDE files: 8
 Number of MACROs called: 322
 Number of [#]PROCs used: 0
 
-Assembled 7887 lines (No Errors, Warnings: 0), CRC: $66CB
+Assembled 7898 lines (No Errors, Warnings: 0), CRC: $DCA5
 
                          *** End of prg.asm listing ***

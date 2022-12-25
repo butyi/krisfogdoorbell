@@ -35,7 +35,7 @@ start:
         jsr     COP_Init        ; Init watchdog
         bsr     PTX_Init        ; Init port bits to output to decrease current in stop mode
         jsr     WAV_Init        ; Init wave player PWM channels and enable its interrupt
-        bsr     IRQ_Init        ; Init IRQ pin for wakeup
+        bsr     PIRQ_init       ; Init Port IRQ pin for wakeup
 
         cli                     ; enable interrupts
 
@@ -95,21 +95,30 @@ PTX_Init
         rts
 
 ; ------------------------------------------------------------------------------
-; Init IRQ pin to wake up from Stop Mode
-IRQ_Init
-        ; IRQPDD 0x40: 1 IRQ pull device disabled (external pull-up)
-        ; IRQEDG 0x20: 0 IRQ is falling edge or falling edge/low-level sensitive
-        ; IRQPE  0x10: 1 IRQ pin function is enabled
-        ; IRQACK 0x04: 1 to clear IRQF
-        ; IRQIE  0x02: 1 Interrupt requested whenever IRQF = 1
-        ; IRQMOD 0x01: 0 IRQ event on edge only
-        mov     #$56,IRQSC      ; Enable IRQ pin interrupt
+; Init Port Interrupt pin PTA0 to wake up from Stop Mode
+PIRQ_init
+        clra                    ; Interrupt disable
+        sta     PTASC           ; Interrupt Status and Control Register
+
+        clra                    ; A pull-up device is connected to the associated pin and detects falling edge/low level for interrupt generation
+        sta     PTAES           ; Interrupt Edge Select Register
+
+        lda     #RXD1_A_        ; Pin enabled as interrupt
+        sta     PTAPS           ; Interrupt Pin Select Register
+
+        lda     #PTAACK_        ; Write to PTxACK in PTxSC to clear any false interrupts
+        sta     PTASC           ; Interrupt Status and Control Register
+
+        lda     #PTAIE_         ; Edge only, Interrupt enable
+        sta     PTASC           ; Interrupt Status and Control Register
+
         rts
 
 ; ------------------------------------------------------------------------------
-; IRQ pin interrupt routine, hits when IRQ pin is triggered
-IRQ_IT
-        bset    IRQACK.,IRQSC   ; clear flag
+; Port IRQ pin interrupt routine
+PIRQ_IT
+        lda     #PTAACK_|PTAIE_ ; Write to PTxACK in PTxSC to clear interrupt
+        sta     PTASC           ; Interrupt Status and Control Register
         ; Do nothing, this is only a wake up interrupt
         rti
 
@@ -117,8 +126,8 @@ IRQ_IT
 
 ; ===================== IT VECTORS ==========================================
 #VECTORS
-        org     Virq
-        dw      IRQ_IT
+        org     Vport
+        dw      PIRQ_IT
 
         org     Vreset
         dw      start           ; Program Start
