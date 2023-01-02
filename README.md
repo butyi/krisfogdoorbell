@@ -22,8 +22,11 @@ If you do not like battery, a simple USB charger is also sufficient.
 
 #### Sleep lifetime
 
-In sleep state circuit needs 5 uA only. This is very low current.
-With a 2500mAh 18650 battery, standby lifetime is 2.5Ah / 0.000005 A = half million hours = 20833 days = 57 years.
+In sleep state circuit needs 1 uA only.
+
+![standby current in stop3 mode](https://github.com/butyi/krisfogdoorbell/blob/main/stopcurrent.jpg)
+
+With a 2500mAh 18650 battery, standby lifetime is 2.5Ah / 0.000001 A = two and half million hours = 104066 days = 285 years.
 
 #### Play lifetime
 
